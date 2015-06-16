@@ -3,8 +3,6 @@ package net.moltak.daggerpractice.module;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.inject.Inject;
-
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -13,13 +11,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class GithubApiModuleTest {
 
-    @Inject GithubApiModule githubApiModule;
+    GithubApiModule githubApiModule;
 
     @Before
     public void setUp() throws Exception {
+        githubApiModule = new GithubApiModule();
     }
 
-    @Test public void testInjectGithubApiModule() {
+    @Test
+    public void testInjectGithubApiModule() {
         assertThat(githubApiModule, notNullValue());
     }
+
+
 }
