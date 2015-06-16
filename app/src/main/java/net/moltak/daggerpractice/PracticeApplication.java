@@ -2,7 +2,6 @@ package net.moltak.daggerpractice;
 
 import android.app.Application;
 import android.location.LocationManager;
-import android.util.Log;
 
 import net.moltak.daggerpractice.module.AndroidModule;
 
@@ -10,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import dagger.Component;
+
 
 /**
  * Created by moltak on 15. 6. 15..
@@ -35,7 +35,6 @@ public class PracticeApplication extends Application {
                 .androidModule(new AndroidModule(this))
                 .build();
         component.inject(this);
-        Log.d("Log", locationManager.toString());
     }
 
     public ApplicationComponent component() {
