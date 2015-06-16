@@ -3,6 +3,7 @@ package net.moltak.daggerpractice.module;
 import com.squareup.okhttp.OkHttpClient;
 
 import net.moltak.daggerpractice.data.GithubApiService;
+import net.moltak.daggerpractice.data.UserManager;
 
 import java.util.concurrent.TimeUnit;
 
@@ -16,8 +17,17 @@ import retrofit.client.OkClient;
 /**
  * Created by moltak on 15. 6. 16..
  */
-@Module
+@Module(complete = false, library = true)
 public class GithubApiModule {
+    @Provides
+    @Singleton
+    OkHttpClient provideOkHttpClient() {
+        OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.setConnectTimeout(60 * 1000, TimeUnit.MILLISECONDS);
+        okHttpClient.setReadTimeout(60 * 1000, TimeUnit.MILLISECONDS);
+        return okHttpClient;
+    }
+
     @Provides
     @Singleton
     RestAdapter provideGithubAdapter(OkHttpClient okHttpClient) {
@@ -30,16 +40,13 @@ public class GithubApiModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideOkHttpClient() {
-        OkHttpClient okHttpClient = new OkHttpClient();
-        okHttpClient.setConnectTimeout(60 * 1000, TimeUnit.MILLISECONDS);
-        okHttpClient.setReadTimeout(60 * 1000, TimeUnit.MILLISECONDS);
-        return okHttpClient;
+    GithubApiService provideGithubApiService(RestAdapter restAdapter) {
+        return restAdapter.create(GithubApiService.class);
     }
 
     @Provides
     @Singleton
-    GithubApiService provideGithubApiService(RestAdapter restAdapter) {
-        return restAdapter.create(GithubApiService.class);
+    UserManager provideUserManager(GithubApiService githubApiService) {
+        return new UserManager(githubApiService);
     }
 }

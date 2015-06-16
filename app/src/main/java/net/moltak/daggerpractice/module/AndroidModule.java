@@ -13,7 +13,9 @@ import dagger.Provides;
 /**
  * Created by moltak on 15. 6. 16..
  */
-@Module
+@Module(
+        library = true
+)
 public class AndroidModule {
     private final PracticeApplication application;
 
@@ -21,11 +23,15 @@ public class AndroidModule {
         this.application = application;
     }
 
-    @Provides @Singleton Context provideApplicationContext() {
+    @Provides
+    @Singleton
+    Context provideApplicationContext() {
         return application;
     }
 
-    @Provides @Singleton LocationManager provideLocationManager() {
+    @Provides
+    @Singleton
+    LocationManager provideLocationManager() {
         return (LocationManager) application.getSystemService(Context.LOCATION_SERVICE);
     }
 }

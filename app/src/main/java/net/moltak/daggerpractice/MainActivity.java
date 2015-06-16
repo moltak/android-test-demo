@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ((PracticeApplication)getApplication()).component().inject(this);
+        ((PracticeApplication)getApplication()).inject(this);
         Log.d("Log", locationManager.toString());
     }
 }

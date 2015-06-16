@@ -4,11 +4,14 @@ import android.app.Application;
 import android.location.LocationManager;
 
 import net.moltak.daggerpractice.module.AndroidModule;
+import net.moltak.daggerpractice.module.GithubApiModule;
+
+import java.util.Arrays;
+import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
-import dagger.Component;
+import dagger.ObjectGraph;
 
 
 /**
@@ -16,28 +19,25 @@ import dagger.Component;
  */
 public class PracticeApplication extends Application {
 
-    @Singleton
-    @Component(modules = AndroidModule.class)
-    public interface ApplicationComponent {
-        void inject(PracticeApplication application);
-        void inject(MainActivity mainActivity);
-    }
+    private ObjectGraph graph;
 
     @Inject LocationManager locationManager;
-
-    private ApplicationComponent component;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        component = DaggerPracticeApplication_ApplicationComponent.builder()
-                .androidModule(new AndroidModule(this))
-                .build();
-        component.inject(this);
+        graph = ObjectGraph.create(getModules().toArray());
     }
 
-    public ApplicationComponent component() {
-        return component;
+    protected List<Object> getModules() {
+        return Arrays.asList(
+                new AndroidModule(this),
+                new GithubApiModule()
+        );
+    }
+
+    public void inject(Object object) {
+        graph.inject(object);
     }
 }
