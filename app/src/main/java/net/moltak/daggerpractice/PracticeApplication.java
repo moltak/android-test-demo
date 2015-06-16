@@ -7,40 +7,44 @@ import android.util.Log;
 import net.moltak.daggerpractice.module.AndroidModule;
 import net.moltak.daggerpractice.module.GithubApiModule;
 
-import java.util.Arrays;
-import java.util.List;
-
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
-import dagger.ObjectGraph;
+import dagger.Component;
 
 /**
  * Created by moltak on 15. 6. 15..
  */
 public class PracticeApplication extends Application {
 
-    private ObjectGraph graph;
-
     @Inject LocationManager locationManager;
+    private AppComponent component;
+
+    @Singleton
+    @Component(
+            modules = {
+                    AndroidModule.class,
+                    GithubApiModule.class
+            })
+    public interface AppComponent {
+        void inject(PracticeApplication practiceApplication);
+        void inject(MainActivity mainActivity);
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        graph = ObjectGraph.create(getModules().toArray());
-        inject(this);
+        component = DaggerPracticeApplication_AppComponent.builder()
+                .androidModule(new AndroidModule(this))
+                .githubApiModule(new GithubApiModule())
+                .build();
 
+        getComponent().inject(this);
         Log.d("inject", locationManager.toString());
     }
 
-    protected List<Object> getModules() {
-        return Arrays.asList(
-                new AndroidModule(this),
-                new GithubApiModule()
-        );
-    }
-
-    public void inject(Object object) {
-        graph.inject(object);
+    public AppComponent getComponent() {
+        return component;
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.location.LocationManager;
 
 import net.moltak.daggerpractice.PracticeApplication;
+import net.moltak.daggerpractice.annotation.ForApplication;
 
 import javax.inject.Singleton;
 
@@ -13,7 +14,7 @@ import dagger.Provides;
 /**
  * Created by moltak on 15. 6. 16..
  */
-@Module(injects = PracticeApplication.class, library = true)
+@Module
 public class AndroidModule {
     private final PracticeApplication application;
 
@@ -23,6 +24,7 @@ public class AndroidModule {
 
     @Provides
     @Singleton
+    @ForApplication
     Context provideApplicationContext() {
         return application;
     }

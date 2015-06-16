@@ -32,12 +32,12 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.3.0'
 
     //Dagger 2
-//    compile 'com.google.dagger:dagger:2.0'
-//    apt 'com.google.dagger:dagger-compiler:2.0'
+    compile 'com.google.dagger:dagger:2.0'
+    apt 'com.google.dagger:dagger-compiler:2.0'
     provided 'org.glassfish:javax.annotation:10.0-b28'
 
-    compile 'com.squareup.dagger:dagger:1.2.2'
-    apt 'com.squareup.dagger:dagger-compiler:1.2.2'
+//    compile 'com.squareup.dagger:dagger:1.2.2'
+//    apt 'com.squareup.dagger:dagger-compiler:1.2.2'
 
     testCompile 'junit:junit:4.12'
     testCompile "org.mockito:mockito-core:1.9.5"

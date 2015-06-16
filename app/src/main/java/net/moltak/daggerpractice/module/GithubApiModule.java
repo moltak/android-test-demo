@@ -2,7 +2,6 @@ package net.moltak.daggerpractice.module;
 
 import com.squareup.okhttp.OkHttpClient;
 
-import net.moltak.daggerpractice.MainActivity;
 import net.moltak.daggerpractice.data.GithubApiService;
 import net.moltak.daggerpractice.data.UserManager;
 
@@ -18,7 +17,7 @@ import retrofit.client.OkClient;
 /**
  * Created by moltak on 15. 6. 16..
  */
-@Module(injects = MainActivity.class, complete = false, library = true)
+@Module
 public class GithubApiModule {
     @Provides
     @Singleton
