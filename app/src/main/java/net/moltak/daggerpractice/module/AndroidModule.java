@@ -13,9 +13,7 @@ import dagger.Provides;
 /**
  * Created by moltak on 15. 6. 16..
  */
-@Module(
-        library = true
-)
+@Module(injects = PracticeApplication.class, library = true)
 public class AndroidModule {
     private final PracticeApplication application;
 

@@ -1,6 +1,5 @@
 package net.moltak.daggerpractice.module;
 
-import net.moltak.daggerpractice.data.GithubApiService;
 import net.moltak.daggerpractice.data.User;
 import net.moltak.daggerpractice.data.UserManager;
 
@@ -15,7 +14,6 @@ import dagger.Module;
 import dagger.ObjectGraph;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
@@ -23,7 +21,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class GithubApiModuleTest {
 
-    @Inject GithubApiService githubApiService;
     @Inject UserManager userManager;
 
     @Before
@@ -39,17 +36,8 @@ public class GithubApiModuleTest {
     static class TestModule {}
 
     @Test
-    public void testInjectGithubApiModule() {
-        assertThat(githubApiService, notNullValue());
-    }
-
-    @Test
     public void testUserManager() throws ExecutionException, InterruptedException {
-        assertThat(userManager, notNullValue());
-
-        User u = userManager.getUser("moltak").toBlocking().toFuture().get();
-        assertThat(u, notNullValue());
-
-        assertThat(u.email, is("moltak@gmail.com"));
+        User u = userManager.getUser("JakeWharton").toBlocking().toFuture().get();
+        assertThat(u.email, is("jakewharton@gmail.com"));
     }
 }
