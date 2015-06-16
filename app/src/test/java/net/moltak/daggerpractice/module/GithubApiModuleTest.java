@@ -10,9 +10,6 @@ import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
 
-import dagger.Module;
-import dagger.ObjectGraph;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -25,15 +22,10 @@ public class GithubApiModuleTest {
 
     @Before
     public void setUp() throws Exception {
-        ObjectGraph.create(new TestModule()).inject(this);
+        DaggerTestComponent.builder()
+                .build()
+                .inject(this);
     }
-
-    @Module(
-            includes = GithubApiModule.class,
-            injects = GithubApiModuleTest.class,
-            overrides = true
-    )
-    static class TestModule {}
 
     @Test
     public void testUserManager() throws ExecutionException, InterruptedException {
